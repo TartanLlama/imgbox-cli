@@ -75,3 +75,24 @@ async def json(gallery, filepaths):
         import json
         print(json.dumps(submissions, indent=4))
     return exit_code
+
+async def bbcode(gallery, filepaths):
+    exit_code = 0
+    if not _all_files_ok(filepaths):
+        exit_code = 1
+    else:
+        try:
+            await gallery.create()
+            print(f'Gallery: {gallery.url}')
+            print(f'   Edit: {gallery.edit_url}')
+        except ConnectionError as e:
+            exit_code = 1
+            print(str(e), file=sys.stderr)
+        else:
+            async for sub in gallery.add(filepaths):
+                if sub.success:
+                    print(f'      [img]{sub.image_url}[/img]')
+                else:
+                    print(f'  {sub.error}')
+                    exit_code = 1
+    return exit_code

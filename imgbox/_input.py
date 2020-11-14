@@ -26,8 +26,13 @@ def get_args(argv):
     argparser.add_argument('--adult', '-a', action='store_true',
                            help='Mark gallery as adult-only')
 
-    argparser.add_argument('--json', '-j', action='store_true',
+    output = argparser.add_mutually_exclusive_group()
+
+    output.add_argument('--json', '-j', action='store_true',
                            help='Print URLs as JSON object')
+
+    output.add_argument('--bbcode', '-b', action='store_true',
+                           help='Print URLs as BBCode')
 
     argparser.add_argument('--version', '-V', action='version',
                            version=f'{__command_name__} {__version__}')

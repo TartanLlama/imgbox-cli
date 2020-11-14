@@ -40,6 +40,8 @@ async def run(args):
 
         if args.json:
             create_output = _output.json
+        elif args.bbcode:
+            create_output = _output.bbcode
         else:
             create_output = _output.text
 
